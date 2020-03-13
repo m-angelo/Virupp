@@ -27,6 +27,13 @@ class ShopsAdapter(val items : List<Shops_class>, val context: Context) : Recycl
     override fun onBindViewHolder(holder: ShopHolder, position: Int) {
         holder?.street_text?.text = items[position].str
         holder?.shop_text?.text = items[position].nm
+        holder?.extend?.setOnClickListener{
+            if ( holder?.shop_items?.visibility==View.VISIBLE){
+                 holder?.shop_items?.visibility=View.GONE}
+            else{
+                holder?.shop_items?.visibility=View.VISIBLE
+        }
+        }
     }
 }
 
@@ -34,4 +41,6 @@ class ShopHolder (view: View) : RecyclerView.ViewHolder(view) {
     // Holds the TextView that will add each animal to
     val street_text = view.street_text
     val shop_text = view.shop_text
+    val extend = view.expander
+    val shop_items = view.shop_items
 }

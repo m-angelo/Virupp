@@ -6,34 +6,86 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
     android:layout_marginBottom="10dp"
-    android:background="@drawable/roundedrect32">
+    android:background="@drawable/roundedrect32purpl">
 
+
+    <ImageView
+        android:id="@+id/tile"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/shop_items"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/roundedrect32" />
 
     <TextView
         android:id="@+id/shop_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="Biedronka"
-        android:textSize="25dp"
+        android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.07999998" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/street_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:text="Ks nosala"
+        android:layout_marginBottom="20dp"
+        android:text="Ul Ksiedza Nosala"
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.20"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.222"
+        app:layout_constraintStart_toStartOf="@+id/shop_text"
         app:layout_constraintTop_toBottomOf="@+id/shop_text"
-        app:layout_constraintVertical_bias="0.523" />
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/status"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:scaleType="fitXY"
+        android:tint="#FF7474"
+        app:layout_constraintBottom_toBottomOf="@+id/street_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/shop_text"
+        app:srcCompat="@drawable/button_action" />
+
+    <ImageButton
+        android:id="@+id/expander"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="25dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:tint="#673AB7"
+        app:layout_constraintBottom_toBottomOf="@+id/status"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/status"
+        app:srcCompat="@drawable/shop_list" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/shop_items"
+        android:layout_width="match_parent"
+        android:layout_height="77dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tile"
+        app:layout_constraintTop_toBottomOf="@+id/street_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

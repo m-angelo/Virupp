@@ -10,7 +10,7 @@
 
 
     <fragment
-        android:id="@+id/fragment"
+        android:id="@+id/host"
         android:name="com.healtify.virupp.fragments.ShopsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -33,7 +33,7 @@
         android:background="@android:color/transparent"
         android:scaleType="fitXY"
         android:src="@drawable/button_sub_action_dark"
-        android:tint="#9C27B0"
+        android:tint="#856EAF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
