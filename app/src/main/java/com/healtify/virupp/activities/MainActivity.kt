@@ -1,5 +1,7 @@
 package com.healtify.virupp.activities
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window
@@ -19,8 +21,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         this.requestWindowFeature(Window.FEATURE_NO_TITLE)
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        val menu_icon = ImageButton(this)
-        val shop_icon = ImageButton(this)
+        setContentView(R.layout.activity_main)
+        val menu_icon = ImageView(this)
+        val shop_icon = ImageView(this)
         menu_icon.setImageDrawable(
             ContextCompat.getDrawable(
                 applicationContext,
@@ -32,17 +35,22 @@ class MainActivity : AppCompatActivity() {
                 R.drawable.cart
             ))
 
-
-        val itembuilder = SubActionButton.Builder(this)
+        val transp = ColorDrawable(Color.TRANSPARENT);
+        val itembuilder = SubActionButton.Builder(this).setBackgroundDrawable(transp)
         val shop_btn = itembuilder.setContentView(shop_icon).build()
         val menu_btn = itembuilder.setContentView(menu_icon).build()
+        shop_btn.setOnClickListener{
+
+        }
+        menu_btn.setOnClickListener{
+
+        }
         val action_menu = FloatingActionMenu.Builder(this)
             .addSubActionView(shop_btn)
             .addSubActionView(menu_btn)
-            .attachTo(radiusbutton)
+            .attachTo(btn_radial)
             .build()
 
-        setContentView(R.layout.activity_main)
 
     }
 }
