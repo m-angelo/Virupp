@@ -8,4 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="GameBar" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="colorControlNormal">#F0F1F1</item>
+        <item name="colorControlActivated">#28BAFF</item>
+        <item name="colorControlHighlight">#ff6d00</item>
+        <item name="android:progressDrawable">@drawable/game_progress_bar</item>
+        <item name="android:minWidth">200dp</item>
+    </style>
+
 </resources>
