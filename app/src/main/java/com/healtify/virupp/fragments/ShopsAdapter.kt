@@ -4,13 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.healtify.virupp.R
-import com.healtify.virupp.classes.Shops_class
+import com.healtify.virupp.classes.ItemsClass
+import com.healtify.virupp.classes.ShopsClass
 import kotlinx.android.synthetic.main.shop_container.view.*
 
-class ShopsAdapter(val items : List<Shops_class>, val context: Context) : RecyclerView.Adapter<ShopHolder>() {
+class ShopsAdapter(val items : List<ShopsClass>, val context: Context) : RecyclerView.Adapter<ShopHolder>() {
 
     // Gets the number of animals in the list
 
@@ -25,8 +26,19 @@ class ShopsAdapter(val items : List<Shops_class>, val context: Context) : Recycl
 
     // Binds each animal in the ArrayList to a view
     override fun onBindViewHolder(holder: ShopHolder, position: Int) {
+        val ItemsData = listOf(
+            ItemsClass("Papier",10),
+            ItemsClass("Mięso",1),
+            ItemsClass("Słodycze",4),
+            ItemsClass("Papier",10)
+        )
         holder?.street_text?.text = items[position].str
         holder?.shop_text?.text = items[position].nm
+        holder?.shop_items?.apply {
+            layoutManager = LinearLayoutManager(this.context)
+            adapter = ItemsAdapter(ItemsData,context)
+
+        }
         holder?.extend?.setOnClickListener{
             if ( holder?.shop_items?.visibility==View.VISIBLE){
                  holder?.shop_items?.visibility=View.GONE}
@@ -35,6 +47,7 @@ class ShopsAdapter(val items : List<Shops_class>, val context: Context) : Recycl
         }
         }
     }
+
 }
 
 class ShopHolder (view: View) : RecyclerView.ViewHolder(view) {

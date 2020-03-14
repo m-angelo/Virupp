@@ -10,14 +10,8 @@ import com.healtify.virupp.R
 import com.healtify.virupp.classes.ShopsClass
 import kotlinx.android.synthetic.main.shops.*
 
-class ShopsFragment : Fragment() {
+class InfoFragment : Fragment() {
 
-    private val ShopsData = listOf(
-        ShopsClass("Biedronka","ul Strazacka"),
-        ShopsClass("Carrefour","ul Nosala"),
-        ShopsClass("Biedronka","ul Krzyzowa")
-
-    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
@@ -26,17 +20,12 @@ class ShopsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.shops, container, false)
+        inflater.inflate(R.layout.info, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        shops_view.apply{
-            layoutManager = LinearLayoutManager(activity)
-            adapter = ShopsAdapter(ShopsData,context)
-        }
 
     }
-    companion object {
-        fun newInstance(): ShopsFragment = ShopsFragment()
-    }
+
 }
+

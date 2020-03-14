@@ -9,7 +9,7 @@
     android:background="#F1F0F0">
 
 
-    <fragment
+    <FrameLayout
         android:id="@+id/host"
         android:name="com.healtify.virupp.fragments.ShopsFragment"
         android:layout_width="match_parent"
@@ -32,8 +32,7 @@
         android:layout_marginBottom="20dp"
         android:background="@android:color/transparent"
         android:scaleType="fitXY"
-        android:src="@drawable/button_sub_action_dark"
-        android:tint="#856EAF"
+        android:src="@drawable/virus"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
