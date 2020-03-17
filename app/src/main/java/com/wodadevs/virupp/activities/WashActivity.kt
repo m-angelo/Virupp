@@ -28,7 +28,7 @@ class WashActivity : AppCompatActivity() {
             override fun onTick(millisUntilFinished: Long) {
                 var timeleft = millisUntilFinished
                 var timeleft_s =(millisUntilFinished/1000).toFloat()
-                var timepass = (timeleft_ms/1000 - timeleft_s).toFloat()
+                var timepass = (timeleft_ms/1000 - timeleft_s)
                 var time_percent = ((timepass / timeleft_ms * 100000) )
                 timer_text.setText(timeleft_s.toInt().toString())
                 timer_bar.setProgress(time_percent.toInt())

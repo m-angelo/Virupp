@@ -12,6 +12,8 @@ class LocationService : Service() {
     companion object {
         var latitude: Double = 0.0
         var longitude: Double = 0.0
+        var city: String =""
+        var country: String =""
     }
     var fusedLocationClient : FusedLocationProviderClient? = null
     var locationCallback : LocationCallback? = null
@@ -32,6 +34,7 @@ class LocationService : Service() {
             Log.d(TAG!!, "Current Location Latitude: " + latitude + " Longitude: " +
                     longitude)
 
+
         }
         }
 
@@ -44,7 +47,7 @@ class LocationService : Service() {
 
     private  fun requestLocation(){
         val locationRequest = LocationRequest()
-        locationRequest.setInterval(5000)
+        locationRequest.setInterval(180000)
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
         fusedLocationClient?.requestLocationUpdates(locationRequest,locationCallback, Looper.myLooper())
 
