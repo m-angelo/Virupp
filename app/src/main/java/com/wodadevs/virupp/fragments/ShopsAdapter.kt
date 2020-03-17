@@ -1,4 +1,4 @@
-package com.healtify.virupp.fragments
+package com.wodadevs.virupp.fragments
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.healtify.virupp.R
-import com.healtify.virupp.classes.ItemsClass
-import com.healtify.virupp.classes.ShopsClass
+import com.wodadevs.virupp.R
+import com.wodadevs.virupp.classes.ItemsClass
+import com.wodadevs.virupp.classes.ShopsClass
 import kotlinx.android.synthetic.main.shop_container.view.*
 
 class ShopsAdapter(val items : List<ShopsClass>, val context: Context) : RecyclerView.Adapter<ShopHolder>() {
@@ -21,22 +21,27 @@ class ShopsAdapter(val items : List<ShopsClass>, val context: Context) : Recycle
 
     // Inflates the item views
     override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): ShopHolder {
-        return ShopHolder(LayoutInflater.from(context).inflate(R.layout.shop_container, parent, false))
+        return ShopHolder(
+            LayoutInflater.from(
+                context
+            ).inflate(R.layout.shop_container, parent, false)
+        )
     }
 
     // Binds each animal in the ArrayList to a view
     override fun onBindViewHolder(holder: ShopHolder, position: Int) {
         val ItemsData = listOf(
-            ItemsClass("Papier",10),
-            ItemsClass("Mięso",1),
-            ItemsClass("Słodycze",4),
-            ItemsClass("Papier",10)
+            ItemsClass("Papier", 10),
+            ItemsClass("Mięso", 1),
+            ItemsClass("Słodycze", 4),
+            ItemsClass("Papier", 10)
         )
         holder?.street_text?.text = items[position].str
         holder?.shop_text?.text = items[position].nm
         holder?.shop_items?.apply {
             layoutManager = LinearLayoutManager(this.context)
-            adapter = ItemsAdapter(ItemsData,context)
+            adapter =
+                ItemsAdapter(ItemsData, context)
 
         }
         holder?.extend?.setOnClickListener{

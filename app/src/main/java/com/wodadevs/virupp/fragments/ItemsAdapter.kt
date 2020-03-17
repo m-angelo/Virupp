@@ -1,13 +1,13 @@
-package com.healtify.virupp.fragments
+package com.wodadevs.virupp.fragments
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.healtify.virupp.R
-import com.healtify.virupp.classes.ItemsClass
-import com.healtify.virupp.classes.ShopsClass
+import com.wodadevs.virupp.R
+import com.wodadevs.virupp.classes.ItemsClass
+import com.wodadevs.virupp.classes.ShopsClass
 import kotlinx.android.synthetic.main.item_container.view.*
 import kotlinx.android.synthetic.main.shop_container.view.*
 
@@ -22,7 +22,11 @@ class ItemsAdapter(val items : List<ItemsClass>, val context: Context) : Recycle
 
     // Inflates the item views
     override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): ItemHolder {
-        return ItemHolder(LayoutInflater.from(context).inflate(R.layout.item_container, parent, false))
+        return ItemHolder(
+            LayoutInflater.from(
+                context
+            ).inflate(R.layout.item_container, parent, false)
+        )
     }
 
     // Binds each animal in the ArrayList to a view

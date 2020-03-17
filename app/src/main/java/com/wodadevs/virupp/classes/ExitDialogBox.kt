@@ -1,6 +1,6 @@
-package com.healtify.virupp.classes
+package com.wodadevs.virupp.classes
 
-import com.healtify.virupp.R
+import com.wodadevs.virupp.R
 import android.app.Activity
 import android.app.Dialog
 import android.os.Bundle

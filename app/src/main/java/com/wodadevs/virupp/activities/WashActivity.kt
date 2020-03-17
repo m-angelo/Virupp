@@ -1,4 +1,4 @@
-package com.healtify.virupp.activities
+package com.wodadevs.virupp.activities
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -7,8 +7,8 @@ import android.os.CountDownTimer
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.healtify.virupp.R
-import com.healtify.virupp.classes.ExitDialogBox
+import com.wodadevs.virupp.R
+import com.wodadevs.virupp.classes.ExitDialogBox
 import kotlinx.android.synthetic.main.activity_wash.*
 
 
@@ -26,6 +26,7 @@ class WashActivity : AppCompatActivity() {
         }
         val timer = object: CountDownTimer(timeleft_ms, 1000) {
             override fun onTick(millisUntilFinished: Long) {
+                var timeleft = millisUntilFinished
                 var timeleft_s =(millisUntilFinished/1000).toFloat()
                 var timepass = (timeleft_ms/1000 - timeleft_s).toFloat()
                 var time_percent = ((timepass / timeleft_ms * 100000) )
@@ -40,9 +41,7 @@ class WashActivity : AppCompatActivity() {
         timer.start()
 
         fun StartStop(){
-            if (running){
-                running = false
-            }
+            running = !running
         }
 
     }
