@@ -2,6 +2,7 @@ package com.wodadevs.virupp.services
 import android.app.Service
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.os.Binder
 import android.os.IBinder
 import android.os.Looper
 import android.util.Log
@@ -15,7 +16,7 @@ class LocationService : Service() {
     var fusedLocationClient : FusedLocationProviderClient? = null
     var locationCallback : LocationCallback? = null
     override fun onBind(intent: Intent?): IBinder? {
-        Log.d("bind","bind")
+       return Binder()
     }
 
     override fun onCreate() {
