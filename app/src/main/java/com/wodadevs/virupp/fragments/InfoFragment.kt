@@ -40,24 +40,58 @@ class InfoFragment : Fragment() {
         doAsync {
             val overall = JSONObject( URL("https://corona.lmao.ninja/all").readText())
             val detailed = JSONArray(( URL("https://corona.lmao.ninja/countries").readText()))
-            val countries = mutableListOf<String>()
-            for (entry in 1..(detailed.length()-1)){
-                countries.add(detailed.getJSONObject(entry).get("country").toString())
-        }
-            Log.d("json",countries.toString())
-            var geocoder = Geocoder(activity, Locale.getDefault())
+            var geocoder = Geocoder(activity, Locale.ENGLISH)
             var addresses: List<Address> = geocoder.getFromLocation(latitude,longitude , 1)
             var countryName: String = addresses[0].countryName.toString()
+
+            val countries = mutableListOf<String>()
+            val mostcases = mutableListOf<Int>()
+            for (entry in 0..(detailed.length()-1)){
+                countries.add(detailed.getJSONObject(entry).get("country").toString())
+                mostcases.add(detailed.getJSONObject(entry).get("cases").toString().toInt())
+        }
+            val sortedcases = mostcases
+            val used = mutableListOf<String>()
+            val statsData  = mutableListOf<InfoClass>()
+            for (entry in 0..(countries.size-1)){
+                if (countries[entry] == countryName){
+                    used.add(countryName)
+                    statsData.add(InfoClass(title=detailed.getJSONObject(entry).get("country").toString(),
+                        data1 = detailed.getJSONObject(entry).get("cases").toString().toInt() ,
+                        data2 = detailed.getJSONObject(entry).get("recovered").toString().toInt(),
+                        data3 = detailed.getJSONObject(entry).get("deaths").toString().toInt()))
+                }
+            }
+            sortedcases.sort()
+            for (x in 0..2){
+             for (y in 0..mostcases.size-1){
+                if (sortedcases[x]==mostcases[y] && countries[y] !in used){
+                    var temp = detailed.getJSONObject(y)
+                    used.add(countries[y])
+                    Log.d("LIST",temp.get("country").toString())
+                    statsData.add(InfoClass(
+                        title=detailed.getJSONObject(y).get("country").toString(),
+                        data1 = detailed.getJSONObject(y).get("cases").toString().toInt() ,
+                        data2 = detailed.getJSONObject(y).get("recovered").toString().toInt(),
+                        data3 = detailed.getJSONObject(y).get("deaths").toString().toInt()))
+                    break
+                }
+            }}
+            Log.d("json",statsData[1].title.toString())
+            Log.d("json",statsData[1].data1.toString())
+            Log.d("json",statsData[1].data2.toString())
+            Log.d("json",statsData[1].data3.toString())
+
             val InfoData  = listOf<InfoClass>(InfoClass(title=countryName,
                 data1 = overall.get("cases").toString().toInt() ,
                 data2 = overall.get("recovered").toString().toInt(),
-                data3 = overall.get("deaths").toString().toInt()))
+                data3 = overall.get("deaths").toString().toInt(),nestedData = statsData))
             uiThread {
                 info_views.apply{
             layoutManager = LinearLayoutManager(activity)
-            adapter =
-                InfoAdapter(InfoData, context)
+            adapter = InfoAdapter(InfoData, context)
         }
+                loadingscreen.visibility=View.GONE
             }
 
         }

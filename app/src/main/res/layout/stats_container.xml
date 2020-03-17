@@ -21,6 +21,7 @@
         android:theme="@style/StatsBar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/label"
         app:layout_constraintVertical_bias="0.0" />
@@ -39,67 +40,27 @@
         app:layout_constraintVertical_bias="0.0" />
 
 
-
-    <ImageView
-        android:id="@+id/image_recovered"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintBottom_toBottomOf="@+id/image_cases"
-        app:layout_constraintEnd_toStartOf="@+id/image_cases"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/image_cases"
-        app:layout_constraintVertical_bias="0.0"
-        android:tint="#61FF36"
-        android:src="@drawable/circle" />
-
-    <ImageView
-        android:id="@+id/image_cases"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:src="@drawable/circle"
-        android:tint="#FF3535"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/graph_bar"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageView
-        android:id="@+id/image_deaths"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:tint="#1C1C1C"
-        app:layout_constraintBottom_toBottomOf="@+id/image_cases"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/image_cases"
-        app:layout_constraintTop_toTopOf="@+id/image_cases"
-        app:layout_constraintVertical_bias="0.0"
-        android:src="@drawable/circle" />
-
     <TextView
         android:id="@+id/textCases"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:text="Cases"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_cases"
+        app:layout_constraintEnd_toEndOf="@+id/graph_bar"
+        app:layout_constraintStart_toStartOf="@+id/graph_bar"
+        app:layout_constraintTop_toBottomOf="@+id/graph_bar"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textRecovered"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:text="Recovered"
         app:layout_constraintBottom_toBottomOf="@+id/textCases"
-        app:layout_constraintEnd_toEndOf="@+id/image_recovered"
-        app:layout_constraintStart_toStartOf="@+id/image_recovered"
+        app:layout_constraintEnd_toStartOf="@+id/textCases"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textCases" />
 
     <TextView
@@ -108,24 +69,24 @@
         android:layout_height="wrap_content"
         android:text="250000"
         android:textSize="17sp"
-        app:layout_constraintBottom_toBottomOf="@+id/amountCases"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textRecovered"
         app:layout_constraintStart_toStartOf="@+id/textRecovered"
-        app:layout_constraintTop_toTopOf="@+id/amountCases" />
+        app:layout_constraintTop_toBottomOf="@+id/textRecovered"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/amountCases"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="10dp"
         android:text="2500000"
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textCases"
         app:layout_constraintStart_toStartOf="@+id/textCases"
         app:layout_constraintTop_toBottomOf="@+id/textCases"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/amountDeaths"
@@ -133,10 +94,11 @@
         android:layout_height="wrap_content"
         android:text="2500000"
         android:textSize="17sp"
-        app:layout_constraintBottom_toBottomOf="@+id/amountCases"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textDeaths"
         app:layout_constraintStart_toStartOf="@+id/textDeaths"
-        app:layout_constraintTop_toTopOf="@+id/amountCases" />
+        app:layout_constraintTop_toBottomOf="@+id/textDeaths"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textDeaths"
@@ -144,36 +106,8 @@
         android:layout_height="wrap_content"
         android:text="Deaths"
         app:layout_constraintBottom_toBottomOf="@+id/textCases"
-        app:layout_constraintEnd_toEndOf="@+id/image_deaths"
-        app:layout_constraintStart_toStartOf="@+id/image_deaths"
-        app:layout_constraintTop_toTopOf="@+id/textCases" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/MoreContent"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/expander"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/amountCases" />
-
-    <ImageButton
-        android:id="@+id/expander"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:alpha="0.5"
-        android:background="#00FFFFFF"
-        android:scaleType="fitXY"
-        android:src="@drawable/expand"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/amountCases"
-        app:layout_constraintStart_toStartOf="@+id/amountCases"
-        app:layout_constraintTop_toBottomOf="@+id/amountCases"
-        app:layout_constraintVertical_bias="1.0" />
-
+        app:layout_constraintStart_toEndOf="@+id/textCases"
+        app:layout_constraintTop_toTopOf="@+id/textCases" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

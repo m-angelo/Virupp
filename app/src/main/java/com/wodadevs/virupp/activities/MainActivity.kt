@@ -117,8 +117,7 @@ class MainActivity : AppCompatActivity() {
             }}
 
         }
-    }
-}
+    }}
 
 
 fun AppCompatActivity.replaceFragment(fragment: Fragment){
