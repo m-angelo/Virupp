@@ -1,18 +1,18 @@
 package com.wodadevs.virupp.fragments
 
 import android.content.Context
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.textclassifier.TextClassifier.TYPE_EMAIL
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wodadevs.virupp.R
 import com.wodadevs.virupp.classes.InfoClass
-import com.wodadevs.virupp.classes.ItemsClass
 import kotlinx.android.synthetic.main.head_container.view.*
 import kotlinx.android.synthetic.main.info_container.view.*
-import org.jetbrains.anko.view
 
 
 class InfoAdapter(val items : List<InfoClass>, val context: Context) : RecyclerView.Adapter<InfoHolder>() {
@@ -22,13 +22,16 @@ class InfoAdapter(val items : List<InfoClass>, val context: Context) : RecyclerV
     override fun getItemCount(): Int {
         return items.size
     }
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
 
     // Inflates the item views
     override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): InfoHolder {
         var selected_layout: Int = R.layout.info_container
         when (viewType ){
             0 -> selected_layout = R.layout.head_container
-            else -> selected_layout = R.layout.head_container
+            else -> selected_layout = R.layout.info_container
 
         }
         return InfoHolder(
@@ -41,12 +44,10 @@ class InfoAdapter(val items : List<InfoClass>, val context: Context) : RecyclerV
     // Binds each animal in the ArrayList to a view
     override fun onBindViewHolder(holder: InfoHolder, position: Int) {
         val data =items.get(position)
-        val v = holder?.v
-        Log.d("pos",position.toString())
+        var v = holder?.v
         if (position == 0) {
             //screen.label.text = data.title
             if (data.nestedData!!.isNotEmpty()) {
-                Log.d("nested",data.nestedData[2].title)
                 v.label.text = "Global"
                 val recovered = data.data2.toFloat()
                 val deaths = data.data3.toFloat()
@@ -78,6 +79,17 @@ class InfoAdapter(val items : List<InfoClass>, val context: Context) : RecyclerV
         else{
             val head = data.title
             val body = data.article1
+            val full = data.article2
+            v.article_title.text = head
+            v.article_start.text = body
+            v.article_end.text = full
+            v.article_expander.setOnClickListener {
+                if (v.article_end.visibility == View.VISIBLE) {
+                    v.article_end.visibility = View.GONE
+                } else {
+                    v.article_end.visibility = View.VISIBLE
+                }}
+
 
         }
     }

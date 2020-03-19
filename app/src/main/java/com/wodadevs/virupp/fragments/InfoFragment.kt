@@ -68,7 +68,6 @@ class InfoFragment : Fragment() {
                 if (sortedcases[x]==mostcases[y] && countries[y] !in used){
                     var temp = detailed.getJSONObject(y)
                     used.add(countries[y])
-                    Log.d("LIST",temp.get("country").toString())
                     statsData.add(InfoClass(
                         title=detailed.getJSONObject(y).get("country").toString(),
                         data1 = detailed.getJSONObject(y).get("cases").toString().toInt() ,
@@ -82,10 +81,17 @@ class InfoFragment : Fragment() {
             Log.d("json",statsData[1].data2.toString())
             Log.d("json",statsData[1].data3.toString())
 
-            val InfoData  = listOf<InfoClass>(InfoClass(title=countryName,
-                data1 = overall.get("cases").toString().toInt() ,
-                data2 = overall.get("recovered").toString().toInt(),
-                data3 = overall.get("deaths").toString().toInt(),nestedData = statsData))
+            val InfoData  = listOf<InfoClass>(
+                InfoClass(title=countryName,
+                    data1 = overall.get("cases").toString().toInt() ,
+                    data2 = overall.get("recovered").toString().toInt(),
+                    data3 = overall.get("deaths").toString().toInt(),nestedData = statsData),
+
+                InfoClass(title="Latest News",
+                    article1 = "LOREM IPSUM LOREM IPSUM LOREM IPSUM",
+                    article2 = "LOREM IPSUM LOREM IPSUM LOREM IPSUMLOREM IPSUM LOREM IPSUM LOREM IPSUMLOREM IPSUM LOREM IPSUM LOREM IPSUMLOREM IPSUM LOREM IPSUM LOREM IPSUMLOREM IPSUM LOREM IPSUM LOREM IPSUMLOREM IPSUM LOREM IPSUM LOREM IPSUMLOREM IPSUM LOREM IPSUM LOREM IPSUMLOREM IPSUM LOREM IPSUM LOREM IPSUMLOREM IPSUM LOREM IPSUM LOREM IPSUMLOREM IPSUM LOREM IPSUM LOREM IPSUM"
+                   )
+            )
             uiThread {
                 info_views.apply{
             layoutManager = LinearLayoutManager(activity)
