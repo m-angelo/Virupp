@@ -14,9 +14,12 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton
 import com.wodadevs.virupp.R
@@ -28,12 +31,47 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var auth: FirebaseAuth
+
+
+    public override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = auth.currentUser
+
+        updateUI(currentUser)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         this.requestWindowFeature(Window.FEATURE_NO_TITLE)
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_main)
+        val db = Firebase.firestore
+        auth = FirebaseAuth.getInstance()
+        auth.signInAnonymously()
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("TAG", "signInAnonymously:success")
+                    val user = auth.currentUser
+                    val user_data = hashMapOf(
+                        "shops" to "Ada",
+                        "last" to "Lovelace",
+                        "streak" to 0
+                    )
+                    db.collection("users").add()
+                    updateUI(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w("TAG", "signInAnonymously:failure", task.exception)
+                    Toast.makeText(baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show()
+                    updateUI(null)
+                }
+
+            }
         if (Build.VERSION.SDK_INT >= 23){
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             {
@@ -45,6 +83,7 @@ class MainActivity : AppCompatActivity() {
         }else{
             startTrackingService()
         }
+
         val info_icon = ImageView(this)
         val shop_icon = ImageView(this)
         val hands_icon = ImageView(this)
@@ -103,6 +142,11 @@ class MainActivity : AppCompatActivity() {
         startService(intent)
     }
 
+    private fun updateUI(user: FirebaseUser?) {
+
+
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -112,12 +156,10 @@ class MainActivity : AppCompatActivity() {
         when (requestCode) {
             1 -> {if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 startTrackingService()
-            }else{
-                Toast.makeText(this,"GI MI PERM",Toast.LENGTH_LONG).show()
-            }}
+            }}}
 
         }
-    }}
+    }
 
 
 fun AppCompatActivity.replaceFragment(fragment: Fragment){

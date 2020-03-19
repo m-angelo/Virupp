@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "700530827369",
+    "firebase_url": "https://virupp-903.firebaseio.com",
+    "project_id": "virupp-903",
+    "storage_bucket": "virupp-903.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:700530827369:android:f473ca9dd416c98b1342f8",
+        "android_client_info": {
+          "package_name": "com.wodadevs.virupp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "700530827369-q1dglk9ed9efdk0booo7e8scava1k6t6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOOSNyh9o1jJeAhWD1zsmQKS_qn4iapLg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "700530827369-q1dglk9ed9efdk0booo7e8scava1k6t6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

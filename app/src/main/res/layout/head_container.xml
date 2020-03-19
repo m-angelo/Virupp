@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
     android:layout_marginBottom="20dp"
-    android:background="@drawable/roundedrect32">
+    android:background="@drawable/roundedrect32"
+    android:tag="HEAD">
 
     <ProgressBar
         android:id="@+id/graph_bar"
