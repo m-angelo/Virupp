@@ -1,5 +1,7 @@
 package com.wodadevs.virupp.fragments
 import android.content.Context
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,10 +31,41 @@ class ItemsAdapter(val items : List<ItemsClass>, val context: Context) : Recycle
         )
     }
 
-    // Binds each animal in the ArrayList to a view
+    fun View.disable(){
+        getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY)
+        setClickable(false)
+    }
+
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        holder?.name?.text = items[position].name
-        holder?.amount?.text = (items[position].amount).toString()
+        val v = holder
+        val item = items[position]
+        v.name.text = items[position].name
+        v.plus.setOnClickListener {
+            v.plus.disable()
+            v.minus.disable()
+
+        }
+        v.minus.setOnClickListener {
+           v.plus.disable()
+            v.minus.disable()
+
+        }
+        if (position == 0){
+            if (item.amount <=50){
+                 v.state.secondaryProgress = 0
+                v.state.progress = item.amount
+            }else{
+                v.state.secondaryProgress = item.amount
+                v.state.progress = 0
+            }
+        }else{
+            if (item.amount >=50){
+                v.state.secondaryProgress = 0
+                v.state.progress = item.amount
+            }else{
+                v.state.secondaryProgress = item.amount
+                v.state.progress = 0
+        }}
 
     }
 }
@@ -40,6 +73,8 @@ class ItemsAdapter(val items : List<ItemsClass>, val context: Context) : Recycle
 class ItemHolder (view: View) : RecyclerView.ViewHolder(view) {
     val name = view.item_name
     val pic = view.item_pic
-    val amount = view.item_value
+    val state = view.item_bar
+    val plus = view.item_plus
+    val minus = view.item_minus
 
 }

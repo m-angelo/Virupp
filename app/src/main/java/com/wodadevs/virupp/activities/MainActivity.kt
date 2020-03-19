@@ -18,11 +18,14 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton
 import com.wodadevs.virupp.R
+import com.wodadevs.virupp.classes.UserClass
 import com.wodadevs.virupp.fragments.HandsFragment
 import com.wodadevs.virupp.fragments.InfoFragment
 import com.wodadevs.virupp.fragments.ShopsFragment
@@ -32,8 +35,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
-
-
+    companion object{
+        var user_doc: UserClass ?= null
+    }
     public override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
@@ -54,14 +58,42 @@ class MainActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d("TAG", "signInAnonymously:success")
                     val user = auth.currentUser
-                    val user_data = hashMapOf(
-                        "shops" to "Ada",
-                        "last" to "Lovelace",
-                        "streak" to 0
-                    )
-                    db.collection("users").add()
+                    val user_db = db.collection("users").document(user!!.uid)
+                    Log.d("TAG", "signInAnonymously:success")
+                    user_db
+                        .get()
+                        .addOnSuccessListener { document ->
+                            if (document.data != null) {
+                                Log.d("receive data","${document.data}")
+                                user_doc = document.toObject<UserClass>()
+                                if (System.currentTimeMillis() - user_doc!!.last_shop!!.toLong() > 360000){
+                                    user_db
+                                        .update("shops",listOf<String>() )
+                                        .addOnSuccessListener { Log.d("TAG", "Shops resetted!") }
+                                        .addOnFailureListener { e -> Log.w("TAG", "Error updating document", e) }
+                                }
+                                if (System.currentTimeMillis() - user_doc!!.last_wash!!.toLong() > 360000 && user_doc!!.streak!! != 0 ){
+                                    user_db
+                                        .update("streak",0 )
+                                        .addOnSuccessListener { Log.d("TAG", "Streak resetted!") }
+                                        .addOnFailureListener { e -> Log.w("TAG", "Error updating document", e) }
+                                }
+
+                            } else {
+                                Log.d("send data","data")
+                                val user_data = hashMapOf(
+                                    "last_shop" to 0.toLong(),
+                                    "last_wash" to 0.toLong(),
+                                    "streak" to 0,
+                                    "washes" to 0,
+                                    "shops" to listOf<String>()
+                                )
+                                db.collection("users").document(user!!.uid).set(user_data)
+                            }
+                        }
+
+                    //
                     updateUI(user)
                 } else {
                     // If sign in fails, display a message to the user.
@@ -111,15 +143,18 @@ class MainActivity : AppCompatActivity() {
 
         shop_btn.setOnClickListener{
             replaceFragment(ShopsFragment())
+            btn_radial.performClick()
             Log.d("replace","shop_btn")
 
         }
         info_btn.setOnClickListener{
             replaceFragment(InfoFragment())
+            btn_radial.performClick()
             Log.d("replace","info_btn")
         }
         hands_btn.setOnClickListener{
             replaceFragment(HandsFragment())
+            btn_radial.performClick()
             Log.d("replace","hands_btn")
 
         }

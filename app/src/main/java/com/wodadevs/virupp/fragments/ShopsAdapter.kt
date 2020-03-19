@@ -13,7 +13,9 @@ import kotlinx.android.synthetic.main.shop_container.view.*
 
 class ShopsAdapter(val items : MutableList<ShopsClass>, val context: Context) : RecyclerView.Adapter<ShopHolder>() {
 
-    // Gets the number of animals in the list
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
 
     override fun getItemCount(): Int {
         return items.size
@@ -25,23 +27,28 @@ class ShopsAdapter(val items : MutableList<ShopsClass>, val context: Context) : 
     }
     // Inflates the item views
     override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): ShopHolder {
+        var selected_layout: Int = R.layout.shop_container
+        if (viewType == items.size){
+            selected_layout = R.layout.empty_container
+        }
         return ShopHolder(
             LayoutInflater.from(
                 context
-            ).inflate(R.layout.shop_container, parent, false)
+            ).inflate(selected_layout, parent, false)
         )
     }
 
     // Binds each animal in the ArrayList to a view
     override fun onBindViewHolder(holder: ShopHolder, position: Int) {
+        var item = items[position]
+        if (position != items.size){
         val ItemsData = listOf(
-            ItemsClass("Papier", 10),
-            ItemsClass("Mięso", 1),
-            ItemsClass("Słodycze", 4),
-            ItemsClass("Papier", 10)
+            ItemsClass("Kolejka", item.queue!!),
+            ItemsClass("Jedzenie", item.jedzenie!!),
+            ItemsClass("Picie", item.picie!!)
         )
-        holder?.street_text?.text = items[position].str
-        holder?.shop_text?.text = items[position].nm
+        holder?.street_text?.text = item.street
+        holder?.shop_text?.text = item.name
         holder?.shop_items?.apply {
             layoutManager = LinearLayoutManager(this.context)
             adapter =
@@ -55,7 +62,7 @@ class ShopsAdapter(val items : MutableList<ShopsClass>, val context: Context) : 
                 holder?.shop_items?.visibility=View.VISIBLE
         }
         }
-    }
+    }}
 
 }
 

@@ -18,7 +18,7 @@
 
     <style name="StatsBar" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
         <item name="colorControlNormal">#303030</item>
-        <item name="colorControlActivated">#61FF36</item>
+        <item name="colorControlActivated">#38de46</item>
         <item name="colorControlHighlight">#FF3535</item>
         <item name="android:progressDrawable">@drawable/game_progress_bar</item>
         <item name="android:minWidth">200dp</item>

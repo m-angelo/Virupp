@@ -29,11 +29,9 @@ class InfoAdapter(val items : List<InfoClass>, val context: Context) : RecyclerV
     // Inflates the item views
     override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): InfoHolder {
         var selected_layout: Int = R.layout.info_container
-        when (viewType ){
-            0 -> selected_layout = R.layout.head_container
-            else -> selected_layout = R.layout.info_container
-
-        }
+        if (viewType == items.size){ selected_layout = R.layout.empty_container }
+        else if(viewType == 0 ){selected_layout = R.layout.head_container}
+        else{selected_layout = R.layout.info_container}
         return InfoHolder(
             LayoutInflater.from(
                 context
@@ -76,10 +74,10 @@ class InfoAdapter(val items : List<InfoClass>, val context: Context) : RecyclerV
                     }
                 }
             }}
-        else{
+        else if (position != items.size){
             val head = data.title
-            val body = data.article1
-            val full = data.article2
+            val body = data.short
+            val full = data.long
             v.article_title.text = head
             v.article_start.text = body
             v.article_end.text = full
@@ -89,8 +87,6 @@ class InfoAdapter(val items : List<InfoClass>, val context: Context) : RecyclerV
                 } else {
                     v.article_end.visibility = View.VISIBLE
                 }}
-
-
         }
     }
 

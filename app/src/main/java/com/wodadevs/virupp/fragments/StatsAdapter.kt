@@ -20,6 +20,7 @@ class StatsAdapter(val items : List<InfoClass>, val context: Context) : Recycler
         return items.size
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): StatsHolder {
         val selected_layout: Int = R.layout.stats_container
         return StatsHolder(
@@ -30,24 +31,25 @@ class StatsAdapter(val items : List<InfoClass>, val context: Context) : Recycler
     }
 
     override fun onBindViewHolder(holder: StatsHolder, position: Int) {
-        Log.d("items",items[position].title.toString())
-        val data =items[position]
-        val v = holder?.v
-        Log.d("pos",position.toString())
+            Log.d("items", items[position].title.toString())
+            val data = items[position]
+            val v = holder?.v
+            Log.d("pos", position.toString())
             //screen.label.text = data.title
-        Log.d("data",data.title)
-        v.label.text = data.title
-        val recovered = data.data2.toFloat()
-        val deaths = data.data3.toFloat()
-        val sum = data.data1.toFloat()
-        val active = sum - deaths - recovered
-        val proc_recovered = ((recovered/sum)*100).toInt()
-        val proc_cases = ((active/sum)*100).toInt() + proc_recovered
-        v.graph_bar.setProgress(proc_recovered)
-        v.graph_bar.secondaryProgress = proc_cases
-        v.amountCases.text = sum.toInt().toString()
-        v.amountDeaths.text = deaths.toInt().toString()
-        v.amountRecovered.text = recovered.toInt().toString()
+            Log.d("data", data.title)
+            v.label.text = data.title
+            val recovered = data.data2.toFloat()
+            val deaths = data.data3.toFloat()
+            val sum = data.data1.toFloat()
+            val active = sum - deaths - recovered
+            val proc_recovered = ((recovered / sum) * 100).toInt()
+            val proc_cases = ((active / sum) * 100).toInt() + proc_recovered
+            v.graph_bar.setProgress(proc_recovered)
+            v.graph_bar.secondaryProgress = proc_cases
+            v.amountCases.text = sum.toInt().toString()
+            v.amountDeaths.text = deaths.toInt().toString()
+            v.amountRecovered.text = recovered.toInt().toString()
+
 
 
     }

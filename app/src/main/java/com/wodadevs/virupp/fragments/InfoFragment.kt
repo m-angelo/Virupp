@@ -1,5 +1,6 @@
 package com.wodadevs.virupp.fragments
 
+import android.content.ContentValues.TAG
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
@@ -9,6 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 import com.wodadevs.virupp.R
 import com.wodadevs.virupp.classes.InfoClass
 import com.wodadevs.virupp.classes.ShopsClass
@@ -24,10 +28,14 @@ import java.net.URL
 import java.util.*
 
 class InfoFragment : Fragment() {
+    val db = Firebase.firestore
+    val InfoData  = mutableListOf<InfoClass>()
+    var cont = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
+
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -35,8 +43,22 @@ class InfoFragment : Fragment() {
                               savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.info, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    fun onArticleGet(){
+        val articles_db =  db.collection("articles")
+        articles_db
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    var article_obj = document.toObject<InfoClass>()
+                    InfoData.add(article_obj)
+                }
+                cont = true
+            }
+
+
+    }
+
+    fun onLocationGet(view: View){
         doAsync {
             val overall = JSONObject( URL("https://corona.lmao.ninja/all").readText())
             val detailed = JSONArray(( URL("https://corona.lmao.ninja/countries").readText()))
@@ -49,7 +71,7 @@ class InfoFragment : Fragment() {
             for (entry in 0..(detailed.length()-1)){
                 countries.add(detailed.getJSONObject(entry).get("country").toString())
                 mostcases.add(detailed.getJSONObject(entry).get("cases").toString().toInt())
-        }
+            }
             val sortedcases = mostcases
             val used = mutableListOf<String>()
             val statsData  = mutableListOf<InfoClass>()
@@ -64,43 +86,50 @@ class InfoFragment : Fragment() {
             }
             sortedcases.sort()
             for (x in 0..2){
-             for (y in 0..mostcases.size-1){
-                if (sortedcases[x]==mostcases[y] && countries[y] !in used){
-                    var temp = detailed.getJSONObject(y)
-                    used.add(countries[y])
-                    statsData.add(InfoClass(
-                        title=detailed.getJSONObject(y).get("country").toString(),
-                        data1 = detailed.getJSONObject(y).get("cases").toString().toInt() ,
-                        data2 = detailed.getJSONObject(y).get("recovered").toString().toInt(),
-                        data3 = detailed.getJSONObject(y).get("deaths").toString().toInt()))
-                    break
-                }
-            }}
-            Log.d("json",statsData[1].title.toString())
-            Log.d("json",statsData[1].data1.toString())
-            Log.d("json",statsData[1].data2.toString())
-            Log.d("json",statsData[1].data3.toString())
-
-            val InfoData  = listOf<InfoClass>(
+                for (y in 0..mostcases.size-1){
+                    if (sortedcases[x]==mostcases[y] && countries[y] !in used){
+                        var temp = detailed.getJSONObject(y)
+                        used.add(countries[y])
+                        statsData.add(InfoClass(
+                            title=detailed.getJSONObject(y).get("country").toString(),
+                            data1 = detailed.getJSONObject(y).get("cases").toString().toInt() ,
+                            data2 = detailed.getJSONObject(y).get("recovered").toString().toInt(),
+                            data3 = detailed.getJSONObject(y).get("deaths").toString().toInt()))
+                        break
+                    }
+                }}
+            InfoData.add(
                 InfoClass(title=countryName,
                     data1 = overall.get("cases").toString().toInt() ,
                     data2 = overall.get("recovered").toString().toInt(),
-                    data3 = overall.get("deaths").toString().toInt(),nestedData = statsData),
-
-                InfoClass(title="Latest News",
-                    article1 = "LOREM IPSUM LOREM IPSUM LOREM IPSUM",
-                    article2 = "LOREM IPSUM LOREM IPSUM LOREM IPSUMLOREM IPSUM LOREM IPSUM LOREM IPSUMLOREM IPSUM LOREM IPSUM LOREM IPSUMLOREM IPSUM LOREM IPSUM LOREM IPSUMLOREM IPSUM LOREM IPSUM LOREM IPSUMLOREM IPSUM LOREM IPSUM LOREM IPSUMLOREM IPSUM LOREM IPSUM LOREM IPSUMLOREM IPSUM LOREM IPSUM LOREM IPSUMLOREM IPSUM LOREM IPSUM LOREM IPSUMLOREM IPSUM LOREM IPSUM LOREM IPSUM"
-                   )
+                    data3 = overall.get("deaths").toString().toInt(),nestedData = statsData)
             )
+
+            onArticleGet()
+
+            while(!cont){}
+
             uiThread {
                 info_views.apply{
-            layoutManager = LinearLayoutManager(activity)
-            adapter = InfoAdapter(InfoData, context)
-        }
+                    layoutManager = LinearLayoutManager(activity)
+                    adapter = InfoAdapter(InfoData, context)
+                }
                 loadingscreen.visibility=View.GONE
             }
 
         }
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+       doAsync {
+           while (true) {
+               if (latitude != 0.0 || longitude != 0.0){
+                   break
+               }
+           }
+           onLocationGet(view)
+       }
+
 
 //
 

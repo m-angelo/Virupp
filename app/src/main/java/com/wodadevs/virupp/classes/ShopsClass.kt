@@ -1,4 +1,9 @@
 package com.wodadevs.virupp.classes
 
-class ShopsClass(val nm: String, val str: String) {
-}
+data class ShopsClass(
+    val name: String?=null,
+    val street: String?=null,
+    val queue: Int?=null,
+    val jedzenie: Int?=null,
+    val picie: Int?=null
+)
