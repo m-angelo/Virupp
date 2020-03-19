@@ -11,7 +11,7 @@ import com.wodadevs.virupp.classes.ItemsClass
 import com.wodadevs.virupp.classes.ShopsClass
 import kotlinx.android.synthetic.main.shop_container.view.*
 
-class ShopsAdapter(val items : List<ShopsClass>, val context: Context) : RecyclerView.Adapter<ShopHolder>() {
+class ShopsAdapter(val items : MutableList<ShopsClass>, val context: Context) : RecyclerView.Adapter<ShopHolder>() {
 
     // Gets the number of animals in the list
 
@@ -19,6 +19,10 @@ class ShopsAdapter(val items : List<ShopsClass>, val context: Context) : Recycle
         return items.size
     }
 
+    fun addItem(value: ShopsClass, index:Int){
+        items.add(value)
+        notifyItemInserted(index)
+    }
     // Inflates the item views
     override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): ShopHolder {
         return ShopHolder(
