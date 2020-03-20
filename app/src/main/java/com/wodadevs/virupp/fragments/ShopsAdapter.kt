@@ -47,9 +47,9 @@ class ShopsAdapter(val items : MutableList<ShopsClass>, val context: Context) : 
         val dbref = item.dbref
         if (position != items.size){
         val ItemsData = listOf(
-            ItemsClass("Kolejka", item.queue!!,dbref!!),
-            ItemsClass("Jedzenie", item.jedzenie!!,dbref),
-            ItemsClass("Picie", item.picie!!,dbref)
+            ItemsClass("Queue", item.queue!!,dbref!!),
+            ItemsClass("Food", item.jedzenie!!,dbref),
+            ItemsClass("Water", item.picie!!,dbref)
         )
         v.street_text?.text = item.street
         v.shop_text?.text = item.name

@@ -120,7 +120,8 @@ class MainActivity : AppCompatActivity() {
         val info_icon = ImageView(this)
         val shop_icon = ImageView(this)
         val hands_icon = ImageView(this)
-        replaceFragment(InfoFragment())
+        //CHANGE THAT LINE ONLY TESTING SUITE
+        replaceFragment(HandsFragment())
         info_icon.setImageDrawable(
             ContextCompat.getDrawable(
                 applicationContext,

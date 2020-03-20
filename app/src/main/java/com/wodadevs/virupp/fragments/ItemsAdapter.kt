@@ -114,9 +114,9 @@ class ItemsAdapter(val items : List<ItemsClass>,val context: Context) : Recycler
         val v = holder
         val item = items[position]
         when(item.name){
-            "Kolejka" -> {v.name.tag="queue"}
-            "Jedzenie" -> {v.name.tag="jedzenie"}
-            "Picie" -> {v.name.tag="picie"}
+            "Queue" -> {v.name.tag="queue"}
+            "Food" -> {v.name.tag="jedzenie"}
+            "Water" -> {v.name.tag="picie"}
         }
         current_ref=item.dbref+"_"+v.name.tag
         Log.d("shops",user_doc!!.shops!!.toString())

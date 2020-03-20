@@ -13,12 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topic"
+        app:layout_constraintTop_toTopOf="@+id/loadingscreen"
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/head_container" />
 
@@ -26,28 +25,79 @@
         android:id="@+id/topic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         android:text="COVID-19"
         android:textSize="35sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
+
     <ProgressBar
         android:id="@+id/loadingscreen"
         style="?android:attr/progressBarStyle"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginTop="25dp"
         android:indeterminate="true"
         android:indeterminateTint="#673AB7"
         android:indeterminateTintMode="src_in"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radio_info"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/radio_mit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:text="MITY"
+        android:tag="MITY"
+        android:textColor="#353535"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/info_views"
+        app:layout_constraintEnd_toStartOf="@+id/radio_news"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/radio_news" />
+
+    <Button
+        android:id="@+id/radio_news"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent"
+        android:tag="NEWS"
+        android:text="NEWS"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topic"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/radio_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:fontFamily="sans-serif-medium"
+        android:text="INFO"
+        android:tag="INFO"
+        android:textSize="20sp"
+        android:textColor="#353535"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/info_views"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/radio_news"
+        app:layout_constraintTop_toTopOf="@+id/radio_news" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

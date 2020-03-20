@@ -8,4 +8,7 @@ data class InfoClass (
     val data1:Int = 0,
     val data2:Int = 0,
     val data3:Int = 0 ,
-    val nestedData:List<InfoClass>?=null)
+    val index:Int = 0,
+    val type:String ="",
+    val nestedData:List<InfoClass>?=null
+)

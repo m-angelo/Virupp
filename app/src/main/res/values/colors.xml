@@ -2,8 +2,13 @@
 <resources>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorPrimaryLight">#722DD5</color>
+
     <color name="colorAccent">#03DAC5</color>
     <color name="tintRED">#FF7474</color>
     <color name="tintYLW">#FFF174</color>
-    <color name="tintGRN">#92FF74</color>
+    <color name="tintGRN">#6EFF69</color>
+    <color name="darkGRN">#13E837</color>
+    <color name="disable_btn">#373737</color>
+
 </resources>
