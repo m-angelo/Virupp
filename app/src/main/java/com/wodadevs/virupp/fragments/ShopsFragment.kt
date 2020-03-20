@@ -61,18 +61,19 @@ class ShopsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        var latitude = latitude
-        var longitude = longitude
-        var geocoder = Geocoder(activity, Locale.getDefault())
-        var addresses: List<Address> = geocoder.getFromLocation(latitude,longitude , 1)
-        cityName = addresses[0].locality.toString()
-        city_text.setText(cityName)
-
         mService = Common.googleApiService
-
+        city_text.setText("")
         nearbyShops()
         doAsync {
+            while(latitude==0.0 && longitude == 0.0){}
+            var latitude = latitude
+            var longitude = longitude
+            var geocoder = Geocoder(activity, Locale.getDefault())
+            var addresses: List<Address> = geocoder.getFromLocation(latitude,longitude , 1)
+            cityName = addresses[0].locality.toString()
+            uiThread {
+                city_text.setText(cityName)
+            }
             while(execute<len){}
             uiThread {
                 shops_view.apply{
@@ -96,11 +97,14 @@ class ShopsFragment : Fragment() {
                     currentPlace = response!!.body()!!
 
                     if(response.isSuccessful){
-                        len = response!!.body()!!.results!!.size-1
-                        for (i in 0 until response!!.body()!!.results!!.size-1){
+                        len = currentPlace.results!!.size-1
+                        for (i in 0 until currentPlace.results!!.size-1){
+                            Log.d("amount reponses", response!!.body()!!.results!!.size.toString())
                             val googlePlace = response.body()!!.results!![i]
                             val street = googlePlace.vicinity
                             val placeName = googlePlace.name
+                            val glen = googlePlace.geometry.toString()
+                            Log.d("lengoogle",glen)
                             val placeid = placeName!! + "_" + street!!
 
                             val db = Firebase.firestore
@@ -131,6 +135,7 @@ class ShopsFragment : Fragment() {
                                             )
                                         shop_db.set(shop_data)
                                     }
+                                    shop_doc!!.dbref = placeid
                                     ShopsSeries.add(shop_doc!!)
                                     Log.d("current i","${execute} and size is ${len}")
                                     execute = execute + 1
@@ -139,7 +144,11 @@ class ShopsFragment : Fragment() {
                         }
 
 
+                    }else{
+                        Log.d("amount reponses", "fail")
+
                     }
+
                 }
 
                 override fun onFailure(call: Call<Places>, t: Throwable) {
@@ -150,6 +159,7 @@ class ShopsFragment : Fragment() {
 
     }
     private fun getUrl(latitude: Double, longitude: Double): String {
+        Log.d("location detail", "?location=$latitude,$longitude")
         val googlePlaceUrl = StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json")
         googlePlaceUrl.append("?location=$latitude,$longitude")
         googlePlaceUrl.append("&radius=15000")

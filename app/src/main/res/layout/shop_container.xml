@@ -56,7 +56,6 @@
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
         android:scaleType="fitXY"
-        android:tint="#FF7474"
         app:layout_constraintBottom_toBottomOf="@+id/street_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

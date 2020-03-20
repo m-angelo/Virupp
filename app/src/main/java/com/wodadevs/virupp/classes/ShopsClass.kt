@@ -5,5 +5,6 @@ data class ShopsClass(
     val street: String?=null,
     val queue: Int?=null,
     val jedzenie: Int?=null,
-    val picie: Int?=null
+    val picie: Int?=null,
+    var dbref: String?=null
 )

@@ -1,9 +1,11 @@
 package com.wodadevs.virupp.fragments
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wodadevs.virupp.R
@@ -41,25 +43,31 @@ class ShopsAdapter(val items : MutableList<ShopsClass>, val context: Context) : 
     // Binds each animal in the ArrayList to a view
     override fun onBindViewHolder(holder: ShopHolder, position: Int) {
         var item = items[position]
+        val v = holder
+        val dbref = item.dbref
         if (position != items.size){
         val ItemsData = listOf(
-            ItemsClass("Kolejka", item.queue!!),
-            ItemsClass("Jedzenie", item.jedzenie!!),
-            ItemsClass("Picie", item.picie!!)
+            ItemsClass("Kolejka", item.queue!!,dbref!!),
+            ItemsClass("Jedzenie", item.jedzenie!!,dbref),
+            ItemsClass("Picie", item.picie!!,dbref)
         )
-        holder?.street_text?.text = item.street
-        holder?.shop_text?.text = item.name
-        holder?.shop_items?.apply {
+        v.street_text?.text = item.street
+        v.shop_text?.text = item.name
+            var color = R.color.tintRED
+            if (item.queue!! <= 33){color = R.color.tintGRN}
+            else if  (item.queue!! <= 66){color = R.color.tintYLW}
+            v.shop_status?.setColorFilter(ContextCompat.getColor(context,color))
+        v.shop_items?.apply {
             layoutManager = LinearLayoutManager(this.context)
             adapter =
                 ItemsAdapter(ItemsData, context)
 
         }
-        holder?.extend?.setOnClickListener{
-            if ( holder?.shop_items?.visibility==View.VISIBLE){
-                 holder?.shop_items?.visibility=View.GONE}
+        v.extend?.setOnClickListener{
+            if ( v.shop_items?.visibility==View.VISIBLE){
+                 v.shop_items?.visibility=View.GONE}
             else{
-                holder?.shop_items?.visibility=View.VISIBLE
+                v.shop_items?.visibility=View.VISIBLE
         }
         }
     }}
@@ -71,5 +79,6 @@ class ShopHolder (view: View) : RecyclerView.ViewHolder(view) {
     val street_text = view.street_text
     val shop_text = view.shop_text
     val extend = view.expander
+    val shop_status = view.status
     val shop_items = view.shop_items
 }

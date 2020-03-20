@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity() {
     }
     public override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
 
         updateUI(currentUser)
@@ -57,7 +56,6 @@ class MainActivity : AppCompatActivity() {
         auth.signInAnonymously()
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
                     val user = auth.currentUser
                     val user_db = db.collection("users").document(user!!.uid)
                     Log.d("TAG", "signInAnonymously:success")
@@ -89,8 +87,11 @@ class MainActivity : AppCompatActivity() {
                                     "washes" to 0,
                                     "shops" to listOf<String>()
                                 )
+
                                 db.collection("users").document(user!!.uid).set(user_data)
                             }
+                            user_doc!!.id = user!!.uid
+                            Log.d("userdoc",user_doc!!.id)
                         }
 
                     //

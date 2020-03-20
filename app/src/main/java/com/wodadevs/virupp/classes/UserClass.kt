@@ -5,5 +5,6 @@ var last_shop: Long? = null,
 var last_wash: Long? = null,
 var streak: Int? = null,
 var washes: Int? = null,
-val shops: List<String>?= null
+var shops: List<String>?= null,
+var id: String ?= null
 )

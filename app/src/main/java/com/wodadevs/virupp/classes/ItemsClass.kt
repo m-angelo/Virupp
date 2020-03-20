@@ -1,4 +1,7 @@
 package com.wodadevs.virupp.classes
 
-
-data class ItemsClass(val name: String, val amount: Int)
+data class ItemsClass(
+    val name: String,
+    var amount: Int,
+    var dbref: String
+)
