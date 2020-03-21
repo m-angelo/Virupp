@@ -143,6 +143,18 @@ class MainActivity : AppCompatActivity() {
         val info_btn = itembuilder.setContentView(info_icon).build()
         val hands_btn = itembuilder.setContentView(hands_icon).build()
 
+        shop_btn.background= ContextCompat.getDrawable(
+            applicationContext,
+            R.drawable.circle_purple
+        )
+        hands_btn.background= ContextCompat.getDrawable(
+            applicationContext,
+            R.drawable.circle_purple
+        )
+        info_btn.background= ContextCompat.getDrawable(
+            applicationContext,
+            R.drawable.circle_purple
+        )
         shop_btn.setOnClickListener{
             replaceFragment(ShopsFragment())
             btn_radial.performClick()

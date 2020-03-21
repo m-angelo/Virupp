@@ -102,11 +102,11 @@ class InfoAdapter(val items : List<InfoClass>,val list_type: String, val context
         v.article_expander.setOnClickListener {
             if (v.article_end.visibility == View.VISIBLE) {
                 v.article_end.visibility = View.GONE
-                v.expander.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.expand))
+                v.article_expander.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.expand))
 
             } else {
                 v.article_end.visibility = View.VISIBLE
-                v.expander.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.collapse))
+                v.article_expander.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.collapse))
 
             }}
 
