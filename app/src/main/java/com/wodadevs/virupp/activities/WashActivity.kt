@@ -21,16 +21,15 @@ import org.jetbrains.anko.uiThread
 
 
 class WashActivity : AppCompatActivity() {
-    val db = Firebase.firestore
-    val user_db = db.collection("users").document(user_doc!!.id!!)
+
     val timeleft_ms = 30000.toLong()//30 s
     val interval = 1000.toLong()
     var paused = false
     var timestamp_s = 27
     var counter = 0
-    var resumeFromMillis: Long = 0
+    var resumeFromMillis: Long = 30000
     var resumename: String =""
-    val timer = timer(timeleft_ms,interval,"main")
+    val timer = timer(resumeFromMillis,interval,"main")
     val initial_timer = timer(6000,interval,"init")
     val images = listOf<Int>(
         R.drawable.wash1,
@@ -55,7 +54,9 @@ class WashActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_wash)
         setImage(images[counter])
-        initial_timer.start()
+        doAsync {
+            initial_timer.start()
+        }
         btn_skip.setOnClickListener {  initial_timer.onFinish() }
         btn_exit.setOnClickListener {
             DialogBox()
@@ -78,6 +79,8 @@ class WashActivity : AppCompatActivity() {
     }
     fun onWashFinish(){
         var sync = false
+        val db = Firebase.firestore
+        val user_db = db.collection("users").document(user_doc!!.id!!)
         user_db.get().addOnSuccessListener { document ->
             val old_streak = document.get("streak").toString().toInt()
             val old_washes =document.get("washes").toString().toInt()
@@ -89,6 +92,7 @@ class WashActivity : AppCompatActivity() {
             user_db.update("last_wash",System.currentTimeMillis())
             sync = true
 
+
         }
         doAsync {
             while (!sync){}
@@ -97,6 +101,12 @@ class WashActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+
+    }
+
     override fun onPause() {
         super.onPause()
         paused = true
@@ -124,10 +134,11 @@ class WashActivity : AppCompatActivity() {
     private fun timer(millisInFuture:Long,countDownInterval:Long,timer_type:String):CountDownTimer{
         return object: CountDownTimer(millisInFuture,countDownInterval){
             override fun onTick(millisUntilFinished: Long){
+                resumeFromMillis = millisUntilFinished
                 if (timer_type == "init"){
                     if (paused){
                         resumename="init"
-                        resumeFromMillis = millisUntilFinished
+
                         cancel()
                     }
                     var timeleft = (millisUntilFinished/interval).toInt()
@@ -147,8 +158,9 @@ class WashActivity : AppCompatActivity() {
                         if (counter < 9) {
                             timestamp_s -= 3
                             counter += 1
+                            setImage(images[counter])
                         }
-                        setImage(images[counter])
+
                     }
                     Log.d("time", timeleft_s.toString())
                     Log.d("stamp", timestamp_s.toString())
@@ -165,6 +177,7 @@ class WashActivity : AppCompatActivity() {
                     btn_bg.visibility= View.GONE
                     wash_precounter.visibility= View.GONE
                     wash_precounter_background.visibility= View.GONE
+                    resumeFromMillis = timeleft_ms
                     timer.start()
 
                 }else {

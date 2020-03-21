@@ -89,9 +89,9 @@ class InfoAdapter(val items : List<InfoClass>,val list_type: String, val context
     fun Article_loader(holder: InfoHolder, position: Int){
         val data =items.get(position)
         var v = holder?.v
-        val head = data.title
-        val body = data.short
-        val full = data.long
+        val head = data.title.replace("\\n", System.getProperty("line.separator")!!)
+        val body = data.short.replace("\\n", System.getProperty("line.separator")!!)
+        val full = data.long.replace("\\n", System.getProperty("line.separator")!!)
         Log.d("tag",v.tag.toString())
         v.article_title.text = head
         if (body==""){

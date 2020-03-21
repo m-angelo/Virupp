@@ -33,8 +33,7 @@ import java.util.*
 
 class ShopsFragment : Fragment() {
 
-    private var API_KEY:String = "AIzaSyA-CIQl_R_t_GrdaxtDna9ofTjDaSjNefw"
-
+    private var API_KEY:String ?= ""
     private var locationManager : LocationManager? = null
 
     lateinit var mService:ShopsApi
@@ -61,6 +60,7 @@ class ShopsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        API_KEY = getString(R.string.googlemaps_api_key)
         mService = Common.googleApiService
         city_text.setText("")
         nearbyShops()
