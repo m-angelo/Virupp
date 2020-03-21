@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
                                         .addOnSuccessListener { Log.d("TAG", "Shops resetted!") }
                                         .addOnFailureListener { e -> Log.w("TAG", "Error updating document", e) }
                                 }
-                                if (System.currentTimeMillis() - user_doc!!.last_wash!!.toLong() > 360000 && user_doc!!.streak!! != 0 ){
+                                if (System.currentTimeMillis() - user_doc!!.last_wash!!.toLong() > 86400000 && user_doc!!.streak!! != 0 ){
                                     user_db
                                         .update("streak",0 )
                                         .addOnSuccessListener { Log.d("TAG", "Streak resetted!") }
@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
         val shop_icon = ImageView(this)
         val hands_icon = ImageView(this)
         //CHANGE THAT LINE ONLY TESTING SUITE
-        replaceFragment(HandsFragment())
+        replaceFragment(InfoFragment())
         info_icon.setImageDrawable(
             ContextCompat.getDrawable(
                 applicationContext,

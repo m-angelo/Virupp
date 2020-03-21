@@ -10,12 +10,19 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.wodadevs.virupp.R
+import com.wodadevs.virupp.activities.MainActivity.Companion.user_doc
 import com.wodadevs.virupp.classes.ExitDialogBox
 import kotlinx.android.synthetic.main.activity_wash.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 
 class WashActivity : AppCompatActivity() {
+    val db = Firebase.firestore
+    val user_db = db.collection("users").document(user_doc!!.id!!)
     val timeleft_ms = 30000.toLong()//30 s
     val interval = 1000.toLong()
     var paused = false
@@ -69,7 +76,27 @@ class WashActivity : AppCompatActivity() {
 
 
     }
+    fun onWashFinish(){
+        var sync = false
+        user_db.get().addOnSuccessListener { document ->
+            val old_streak = document.get("streak").toString().toInt()
+            val old_washes =document.get("washes").toString().toInt()
+            user_doc!!.streak = old_streak+1
+            user_doc!!.washes = old_washes+1
+            user_doc!!.last_wash = System.currentTimeMillis()
+            user_db.update("streak",old_streak+1)
+            user_db.update("washes",old_washes+1)
+            user_db.update("last_wash",System.currentTimeMillis())
+            sync = true
 
+        }
+        doAsync {
+            while (!sync){}
+            uiThread {
+                finish()
+            }
+        }
+    }
     override fun onPause() {
         super.onPause()
         paused = true
@@ -141,7 +168,7 @@ class WashActivity : AppCompatActivity() {
                     timer.start()
 
                 }else {
-                    finishActivity(0)
+                    onWashFinish()
                 }
             }
 

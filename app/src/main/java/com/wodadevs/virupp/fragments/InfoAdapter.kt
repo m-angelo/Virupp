@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.textclassifier.TextClassifier.TYPE_EMAIL
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wodadevs.virupp.R
@@ -76,8 +77,10 @@ class InfoAdapter(val items : List<InfoClass>,val list_type: String, val context
             v.expander.setOnClickListener {
                 if (v.MoreContent.visibility == View.VISIBLE) {
                     v.MoreContent.visibility = View.GONE
+                    v.expander.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.expand))
                 } else {
                     v.MoreContent.visibility = View.VISIBLE
+                    v.expander.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.collapse))
                 }
             }
         }
@@ -99,9 +102,14 @@ class InfoAdapter(val items : List<InfoClass>,val list_type: String, val context
         v.article_expander.setOnClickListener {
             if (v.article_end.visibility == View.VISIBLE) {
                 v.article_end.visibility = View.GONE
+                v.expander.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.expand))
+
             } else {
                 v.article_end.visibility = View.VISIBLE
+                v.expander.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.collapse))
+
             }}
+
     }
     // Binds each animal in the ArrayList to a view
     override fun onBindViewHolder(holder: InfoHolder, position: Int) {
