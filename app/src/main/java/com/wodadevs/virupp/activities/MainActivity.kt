@@ -87,11 +87,15 @@ class MainActivity : AppCompatActivity() {
                                     "washes" to 0,
                                     "shops" to listOf<String>()
                                 )
-
+                                val ls = user_data.get("last_shop") as Long
+                                val lw = user_data.get("last_wash") as Long
+                                val sk = user_data.get("streak") as Int
+                                val ws = user_data.get("washes") as Int
+                                val sp : List<String> = user_data.get("shops") as List<String>
+                                user_doc = UserClass(ls,lw,sk,ws,sp,user!!.uid)
                                 db.collection("users").document(user!!.uid).set(user_data)
                             }
                             user_doc!!.id = user!!.uid
-                            Log.d("userdoc",user_doc!!.id)
                         }
 
                     //

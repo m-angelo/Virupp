@@ -21,16 +21,6 @@ import org.jetbrains.anko.uiThread
 
 
 class WashActivity : AppCompatActivity() {
-
-    val timeleft_ms = 30000.toLong()//30 s
-    val interval = 1000.toLong()
-    var paused = false
-    var timestamp_s = 27
-    var counter = 0
-    var resumeFromMillis: Long = 30000
-    var resumename: String =""
-    val timer = timer(resumeFromMillis,interval,"main")
-    val initial_timer = timer(6000,interval,"init")
     val images = listOf<Int>(
         R.drawable.wash1,
         R.drawable.wash2,
@@ -43,6 +33,17 @@ class WashActivity : AppCompatActivity() {
         R.drawable.wash9,
         R.drawable.wash10
     )
+    val timecalc =  (3*images.size*1000).toLong()
+    val timeleft_ms = timecalc//30 s
+    val interval = 1000.toLong()
+    var paused = false
+    var timestamp_s = 27
+    var counter = 0
+    var resumeFromMillis: Long = timecalc
+    var resumename: String =""
+    val timer = timer(resumeFromMillis,interval,"main")
+    val initial_timer = timer(6000,interval,"init")
+
 
     fun setImage(image: Int){
         steps_image.setImageDrawable(ContextCompat.getDrawable(applicationContext,image))
@@ -155,7 +156,7 @@ class WashActivity : AppCompatActivity() {
                 }else {
                     if (timeleft_s.toInt() - timestamp_s == 0) {
                         Log.d("action", "change img")
-                        if (counter < 9) {
+                        if (counter < images.size-1) {
                             timestamp_s -= 3
                             counter += 1
                             setImage(images[counter])
