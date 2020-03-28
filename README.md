@@ -20,7 +20,7 @@ It is well known that more and more often people prefers to acquire knowledge by
 
 Technologies
 
-Whole app has been developed using Android Studio 3.6.1 in Kotlin programming language
+The app has been developed using Android Studio 3.6.1 in Kotlin programming language.
 We used several Maven repositories:
 	https://mvnrepository.com/artifact/com.squareup.retrofit2
 	https://github.com/oguzbilgener/CircularFloatingActionMenu
